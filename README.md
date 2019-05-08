@@ -1,3 +1,5 @@
+[![Docker Repository on Quay](https://quay.io/repository/kkleine/distcc/status "Docker Repository on Quay")](https://quay.io/repository/kkleine/distcc)
+
 # Distcc server images
 
 I use this image to build LLVM distributed over spare machines.
