@@ -6,7 +6,8 @@ I use this image to build LLVM distributed over spare machines.
 
 I encourage you to read this article that I've written about compiling with distcc containers:
 
-https://link.medium.com/cfhBeb298V
+On Red Hat Developer Blog: https://developers.redhat.com/blog/2019/05/15/2-tips-to-make-your-c-projects-compile-3-times-faster/
+On Medium: https://link.medium.com/cfhBeb298V
 
 or watch this video:
 
