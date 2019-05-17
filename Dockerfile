@@ -1,41 +1,20 @@
-FROM fedora:30
+FROM fedora:29
 
 LABEL maintainer="Konrad Kleine <kkleine@redhat.com>"
 LABEL author="Konrad Kleine <kkleine@redhat.com>"
-LABEL description="A distccd image based on Fedora 30 that I use for distributed compilation of LLDB"
+LABEL description="A distccd image based on Fedora 29 that I use for distributed compilation of LLDB"
 ENV LANG=en_US.utf8
 
-# Install dependencies and build tools as listed here:
-# https://lldb.llvm.org/build.html#BuildingLldbOnLinux
-# NOTE: Usually you don't have to install the dependencies as
-# compilation units are being sent.
 RUN dnf install -y \
     clang \
     distcc \
     distcc-server \
-    doxygen \
     gcc \
-    graphviz \
     htop \
-    libasan \
-    libasan-static \
-    libedit-devel \
-    libxml2-devel \
-    make \
-    ncurses-devel \
-    net-tools \
-    python-devel \
-    swig \
    && yum clean all
 
 ENV HOME=/home/distcc
 RUN useradd -s /bin/bash distcc
-
-# Make gold linker available as "gold"
-# TODO(kwk): not sure if this is really needed.
-RUN mkdir -p ${HOME}/bin
-RUN ln -sf /usr/bin/ld.gold ${HOME}/bin/gold
-ENV PATH=$PATH:${HOME}/bin
 
 # Define how to start distccd by default
 # (see "man distccd" for more information)
@@ -61,7 +40,7 @@ CMD [\
 ]
 
 # 3632 is the default distccd port
-# 3633 is the default distccd port for getting a HTTP statistic
+# 3633 is the default distccd port for getting statistics over HTTP
 EXPOSE \
   3632/tcp \
   3633/tcp
@@ -71,4 +50,3 @@ EXPOSE \
 # https://docs.docker.com/engine/reference/builder/#healthcheck)
 HEALTHCHECK --interval=5m --timeout=3s \
   CMD curl -f http://0.0.0.0:3633/ || exit 1
-  
